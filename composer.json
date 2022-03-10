@@ -9,9 +9,6 @@
         "mateuszmesek-magento2/module-document-data-eav-api": "*",
         "mateuszmesek-magento2/module-document-data-indexer-mview": "*"
     },
-    "replace": {
-        "mateuszmesek-magento2/module-document-data-catalog-category-mview": "*"
-    },
     "license": [
         "MIT"
     ],
