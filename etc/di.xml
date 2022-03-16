@@ -12,6 +12,7 @@
             <argument name="resolvers" xsi:type="array">
                 <item name="config" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\Config</item>
                 <item name="attribute" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\NodeSubscription\Attribute\SubscriptionResolver</item>
+                <item name="hierarchy" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\NodeSubscription\Hierarchy\SubscriptionResolver</item>
             </argument>
         </arguments>
     </virtualType>
