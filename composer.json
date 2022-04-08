@@ -7,7 +7,7 @@
         "magento/module-catalog": "*",
         "magento/module-eav": "*",
         "mateuszmesek-magento2/module-document-data-eav-api": "*",
-        "mateuszmesek-magento2/module-document-data-indexer-mview": "*"
+        "mateuszmesek-magento2/module-document-data-index-mview": "*"
     },
     "license": [
         "MIT"
