@@ -3,7 +3,7 @@
 namespace MateuszMesek\DocumentDataCatalogCategoryMview\NodeSubscription\Hierarchy;
 
 use Generator;
-use MateuszMesek\DocumentDataIndexerMviewApi\NodeSubscriptionsResolverInterface;
+use MateuszMesek\DocumentDataIndexMviewApi\NodeSubscriptionsResolverInterface;
 
 class SubscriptionResolver implements NodeSubscriptionsResolverInterface
 {

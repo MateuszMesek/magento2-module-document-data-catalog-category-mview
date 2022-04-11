@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\DB\Ddl\Trigger;
 use Magento\Framework\EntityManager\MetadataPool;
-use MateuszMesek\DocumentDataIndexerMview\Data\SubscriptionFactory;
+use MateuszMesek\DocumentDataIndexMview\Data\SubscriptionFactory;
 use Traversable;
 
 class SubscriptionGenerator

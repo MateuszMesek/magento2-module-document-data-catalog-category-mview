@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="MateuszMesek\DocumentDataIndexerMview\Command\GetNodeSubscriptionsByDocument\ResolverPool">
+    <type name="MateuszMesek\DocumentDataIndexMview\Command\GetNodeSubscriptionsByDocument\ResolverPool">
         <arguments>
             <argument name="documents" xsi:type="array">
                 <item name="catalog_category" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\CompositeResolver</item>
             </argument>
         </arguments>
     </type>
-    <virtualType name="MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\CompositeResolver" type="MateuszMesek\DocumentDataIndexerMview\Command\GetNodeSubscriptionsByDocument\CompositeResolver">
+    <virtualType name="MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\CompositeResolver" type="MateuszMesek\DocumentDataIndexMview\Command\GetNodeSubscriptionsByDocument\CompositeResolver">
         <arguments>
             <argument name="resolvers" xsi:type="array">
                 <item name="config" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\Config</item>
@@ -16,7 +16,7 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\Config" type="MateuszMesek\DocumentDataIndexerMview\Command\GetNodeSubscriptionsByDocument\ConfigResolver">
+    <virtualType name="MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\Config" type="MateuszMesek\DocumentDataIndexMview\Command\GetNodeSubscriptionsByDocument\ConfigResolver">
         <arguments>
             <argument name="documentName" xsi:type="const">Magento\Catalog\Model\Category::ENTITY</argument>
         </arguments>
