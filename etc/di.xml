@@ -1,24 +1,16 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="MateuszMesek\DocumentDataIndexMview\Command\GetNodeSubscriptionsByDocument\ResolverPool">
+    <virtualType name="MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Composite" type="MateuszMesek\DocumentDataIndexMview\SubscriptionProvider\Composite">
         <arguments>
-            <argument name="documents" xsi:type="array">
-                <item name="catalog_category" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\CompositeResolver</item>
-            </argument>
-        </arguments>
-    </type>
-    <virtualType name="MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\CompositeResolver" type="MateuszMesek\DocumentDataIndexMview\Command\GetNodeSubscriptionsByDocument\CompositeResolver">
-        <arguments>
-            <argument name="resolvers" xsi:type="array">
-                <item name="config" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\Config</item>
-                <item name="attribute" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\NodeSubscription\Attribute\SubscriptionResolver</item>
-                <item name="hierarchy" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\NodeSubscription\Hierarchy\SubscriptionResolver</item>
+            <argument name="providers" xsi:type="array">
+                <item name="attribute" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Attribute</item>
+                <item name="hierarchy" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Hierarchy</item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="MateuszMesek\DocumentDataCatalogCategoryMview\Command\GetNodeSubscriptionsByDocument\Config" type="MateuszMesek\DocumentDataIndexMview\Command\GetNodeSubscriptionsByDocument\ConfigResolver">
+    <virtualType name="KMK\DocumentDataCatalogCategoryMview\Action" type="MateuszMesek\DocumentDataIndexMview\Action">
         <arguments>
-            <argument name="documentName" xsi:type="const">Magento\Catalog\Model\Category::ENTITY</argument>
+            <argument name="documentName" xsi:type="string">catalog_category</argument>
         </arguments>
     </virtualType>
 </config>

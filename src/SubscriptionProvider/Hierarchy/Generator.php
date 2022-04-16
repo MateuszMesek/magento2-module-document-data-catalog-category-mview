@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MateuszMesek\DocumentDataCatalogCategoryMview\NodeSubscription\Hierarchy;
+namespace MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Hierarchy;
 
 use InvalidArgumentException;
 use Magento\Catalog\Api\Data\CategoryInterface;
@@ -9,7 +9,7 @@ use Magento\Framework\EntityManager\MetadataPool;
 use MateuszMesek\DocumentDataIndexMview\Data\SubscriptionFactory;
 use Traversable;
 
-class SubscriptionGenerator
+class Generator
 {
     private MetadataPool $metadataPool;
     private SubscriptionFactory $subscriptionFactory;
