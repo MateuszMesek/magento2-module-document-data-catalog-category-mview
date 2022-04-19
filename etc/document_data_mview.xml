@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="urn:magento:module:MateuszMesek_DocumentDataIndexMview:etc/document_data_mview.xsd">
-    <document name="catalog_category"/>
+    <document name="catalog_category">
+        <action name="KMK\DocumentDataCatalogCategoryMview\Action"/>
+        <subscriptionProvider name="MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Composite"/>
+    </document>
 </config>
