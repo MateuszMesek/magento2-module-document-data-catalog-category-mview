@@ -1,0 +1,7 @@
+{
+    "catalog_category_entity": {
+        "index": {
+            "DOCUMENT_DATA_CATALOG_CATEGORY_HIERARCHY": true
+        }
+    }
+}
