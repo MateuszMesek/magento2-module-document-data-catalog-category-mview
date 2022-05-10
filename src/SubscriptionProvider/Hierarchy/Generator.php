@@ -6,26 +6,34 @@ use InvalidArgumentException;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\DB\Ddl\Trigger;
 use Magento\Framework\EntityManager\MetadataPool;
+use Magento\Store\Model\ResourceModel\Store as StoreResource;
+use Magento\Store\Model\StoreDimensionProvider;
 use MateuszMesek\DocumentDataIndexMview\Data\SubscriptionFactory;
 use Traversable;
 
 class Generator
 {
     private MetadataPool $metadataPool;
+    private StoreResource $storeResource;
     private SubscriptionFactory $subscriptionFactory;
 
     public function __construct(
-        MetadataPool $metadataPool,
+        MetadataPool        $metadataPool,
+        StoreResource       $storeResource,
         SubscriptionFactory $subscriptionFactory
     )
     {
         $this->metadataPool = $metadataPool;
+        $this->storeResource = $storeResource;
         $this->subscriptionFactory = $subscriptionFactory;
     }
 
     public function generate(): Traversable
     {
         $metadata = $this->metadataPool->getMetadata(CategoryInterface::class);
+
+        $storeTable = $this->storeResource->getMainTable();
+        $storeDimensionName = StoreDimensionProvider::DIMENSION_NAME;
 
         foreach (Trigger::getListOfEvents() as $event) {
             switch ($event) {
@@ -56,15 +64,19 @@ class Generator
                         ON `category`.`entity_id` = `hierarchy`.`parent_id`
                 )
 
-                SELECT entity_id AS `document_id`, NULL AS `node_path`, NULL AS `dimensions` FROM category_hierarchy
+                SELECT
+                    entity_id AS `document_id`,
+                    NULL AS `node_path`,
+                    JSON_SET('{}', '$.$storeDimensionName', store.store_id) AS `dimensions`
+                FROM category_hierarchy
+                CROSS JOIN $storeTable AS store
+                    ON store.store_id != 0
             SQL;
 
 
             yield $this->subscriptionFactory->create([
                 'tableName' => $metadata->getEntityTable(),
                 'triggerEvent' => $event,
-                #'condition' => "NEW.parent_id != OLD.parent_id",
-                'dimensions' => "JSON_SET('{}', '$.scope', 0)",
                 'rows' => $rows
             ]);
         }

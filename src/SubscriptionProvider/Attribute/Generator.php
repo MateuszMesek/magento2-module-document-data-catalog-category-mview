@@ -4,26 +4,31 @@ namespace MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Att
 
 use InvalidArgumentException;
 use Magento\Catalog\Api\Data\CategoryInterface;
-use Magento\Eav\Model\Config;
+use Magento\Eav\Model\Config as EavConfig;
 use Magento\Framework\DB\Ddl\Trigger;
 use Magento\Framework\EntityManager\MetadataPool;
+use Magento\Store\Model\ResourceModel\Store as StoreResource;
+use Magento\Store\Model\StoreDimensionProvider;
 use MateuszMesek\DocumentDataIndexMview\Data\SubscriptionFactory;
 use Traversable;
 
 class Generator
 {
     private MetadataPool $metadataPool;
-    private Config $config;
+    private EavConfig $eavConfig;
+    private StoreResource $storeResource;
     private SubscriptionFactory $subscriptionFactory;
 
     public function __construct(
-        MetadataPool $metadataPool,
-        Config $config,
+        MetadataPool        $metadataPool,
+        EavConfig           $eavConfig,
+        StoreResource       $storeResource,
         SubscriptionFactory $subscriptionFactory
     )
     {
         $this->metadataPool = $metadataPool;
-        $this->config = $config;
+        $this->eavConfig = $eavConfig;
+        $this->storeResource = $storeResource;
         $this->subscriptionFactory = $subscriptionFactory;
     }
 
@@ -31,11 +36,14 @@ class Generator
     {
         $metadata = $this->metadataPool->getMetadata(CategoryInterface::class);
 
-        $attribute = $this->config->getAttribute($metadata->getEavEntityType(), $code);
+        $attribute = $this->eavConfig->getAttribute($metadata->getEavEntityType(), $code);
 
         if (!$attribute) {
             throw new InvalidArgumentException("Attribute '$code' not found");
         }
+
+        $storeTable = $this->storeResource->getMainTable();
+        $storeDimensionName = StoreDimensionProvider::DIMENSION_NAME;
 
         foreach (Trigger::getListOfEvents() as $event) {
             switch ($event) {
@@ -52,20 +60,29 @@ class Generator
                     throw new InvalidArgumentException("Trigger event '$event' is unsupported");
             }
 
-            $condition = '';
-            $dimensions = "JSON_SET('{}', '$.scope', 0)";
+            $condition = null;
+            $rows = <<<SQL
+                SELECT {$metadata->getIdentifierField()} AS document_id,
+                       NULL AS node_path,
+                       JSON_SET('{}', '$.$storeDimensionName', store.store_id) AS dimensions
+                FROM {$metadata->getEntityTable()}
+                CROSS JOIN $storeTable AS store
+                    ON store.store_id != 0
+                WHERE {$metadata->getLinkField()} = $prefix.{$metadata->getLinkField()}
+            SQL;
 
             if (!$attribute->isStatic()) {
                 $condition = "$prefix.attribute_id = {$attribute->getAttributeId()}";
-                $dimensions = "JSON_SET('{}', '$.scope', $prefix.store_id)";
+                $rows .= <<<SQL
+                    AND IF($prefix.store_id = 0, 1, store.store_id = $prefix.store_id)
+                SQL;
             }
 
             yield $this->subscriptionFactory->create([
                 'tableName' => $attribute->getBackendTable(),
                 'triggerEvent' => $event,
                 'condition' => $condition,
-                'documentId' => "(SELECT {$metadata->getIdentifierField()} FROM {$metadata->getEntityTable()} WHERE {$metadata->getLinkField()} = $prefix.{$metadata->getLinkField()})",
-                'dimensions' => $dimensions,
+                'rows' => $rows
             ]);
         }
     }
