@@ -53,7 +53,7 @@ class Generator
             $rows = <<<SQL
                 WITH RECURSIVE category_hierarchy (`entity_id`, `parent_id`) AS (
                     SELECT `entity_id`, `parent_id`
-                    FROM `mage_catalog_category_entity`
+                    FROM `{$metadata->getEntityTable()}`
                     WHERE `entity_id` = $prefix.entity_id
 
                     UNION ALL
