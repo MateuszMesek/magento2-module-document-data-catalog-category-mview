@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Attribute;
+namespace MateuszMesek\DocumentDataCatalogCategoryMview\Model\SubscriptionProvider\Attribute;
 
 use InvalidArgumentException;
 use Magento\Catalog\Api\Data\CategoryInterface;
@@ -9,27 +9,18 @@ use Magento\Framework\DB\Ddl\Trigger;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Store\Model\ResourceModel\Store as StoreResource;
 use Magento\Store\Model\StoreDimensionProvider;
-use MateuszMesek\DocumentDataIndexMview\Data\SubscriptionFactory;
+use MateuszMesek\DocumentDataIndexMview\Model\Data\SubscriptionFactory;
 use Traversable;
 
 class Generator
 {
-    private MetadataPool $metadataPool;
-    private EavConfig $eavConfig;
-    private StoreResource $storeResource;
-    private SubscriptionFactory $subscriptionFactory;
-
     public function __construct(
-        MetadataPool        $metadataPool,
-        EavConfig           $eavConfig,
-        StoreResource       $storeResource,
-        SubscriptionFactory $subscriptionFactory
+        private readonly MetadataPool        $metadataPool,
+        private readonly EavConfig           $eavConfig,
+        private readonly StoreResource       $storeResource,
+        private readonly SubscriptionFactory $subscriptionFactory
     )
     {
-        $this->metadataPool = $metadataPool;
-        $this->eavConfig = $eavConfig;
-        $this->storeResource = $storeResource;
-        $this->subscriptionFactory = $subscriptionFactory;
     }
 
     public function generate(string $code): Traversable

@@ -1,16 +1,16 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <virtualType name="MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Composite" type="MateuszMesek\DocumentDataIndexMview\SubscriptionProvider\Composite">
+    <virtualType name="MateuszMesek\DocumentDataCatalogCategoryMview\Model\SubscriptionProvider\Composite" type="MateuszMesek\DocumentDataIndexMview\Model\SubscriptionProvider\Composite">
         <arguments>
             <argument name="providers" xsi:type="array">
-                <item name="onCreate" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\OnCreate</item>
-                <item name="onDelete" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\OnDelete</item>
-                <item name="attribute" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Attribute</item>
-                <item name="hierarchy" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Hierarchy</item>
+                <item name="onCreate" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\Model\SubscriptionProvider\OnCreate</item>
+                <item name="onDelete" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\Model\SubscriptionProvider\OnDelete</item>
+                <item name="attribute" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\Model\SubscriptionProvider\Attribute</item>
+                <item name="hierarchy" xsi:type="string">MateuszMesek\DocumentDataCatalogCategoryMview\Model\SubscriptionProvider\Hierarchy</item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="KMK\DocumentDataCatalogCategoryMview\Action" type="MateuszMesek\DocumentDataIndexMview\Action">
+    <virtualType name="KMK\DocumentDataCatalogCategoryMview\Model\Action" type="MateuszMesek\DocumentDataIndexMview\Model\Action">
         <arguments>
             <argument name="documentName" xsi:type="string">catalog_category</argument>
         </arguments>

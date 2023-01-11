@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider;
+namespace MateuszMesek\DocumentDataCatalogCategoryMview\Model\SubscriptionProvider;
 
-use MateuszMesek\DocumentDataCatalogCategoryMview\SubscriptionProvider\Hierarchy\Generator;
-use MateuszMesek\DocumentDataIndexMviewApi\SubscriptionProviderInterface;
+use MateuszMesek\DocumentDataCatalogCategoryMview\Model\SubscriptionProvider\Hierarchy\Generator;
+use MateuszMesek\DocumentDataIndexMviewApi\Model\SubscriptionProviderInterface;
 use Traversable;
 
 class Hierarchy implements SubscriptionProviderInterface
